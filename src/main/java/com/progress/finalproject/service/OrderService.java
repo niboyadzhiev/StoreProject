@@ -8,6 +8,7 @@ import com.progress.finalproject.model.user.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface OrderService {
 
@@ -22,5 +23,7 @@ public interface OrderService {
     void updateAvailability(long orderId, long fromStatus, long toStatus) throws NotEnoughProductsInStockException;
 
     Map<Order, List<OrderDetails>> getOrderDetailsMap ();
+
+    Optional<Order> findOrderById(long orderId);
 
 }

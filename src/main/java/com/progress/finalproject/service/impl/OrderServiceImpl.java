@@ -89,4 +89,9 @@ public class OrderServiceImpl implements OrderService {
         }
         return allOrdersWithDetails;
     }
+
+    @Override
+    public Optional<Order> findOrderById(long orderId) {
+        return orderRepository.findById(orderId);
+    }
 }
