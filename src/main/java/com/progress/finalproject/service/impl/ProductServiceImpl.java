@@ -102,6 +102,25 @@ public class ProductServiceImpl implements ProductService {
         setProductImagesToNewProduct(product, product.getProductId());
     }
 
+    @Override
+    public void updateProduct(Product inputProduct, Optional<Product> productDb, boolean isDeleted) {
+        productDb.ifPresent((p)->{
+            p.setProductName(inputProduct.getProductName());
+            p.setProductDesc(inputProduct.getProductDesc());
+            p.setDetailedDesc(inputProduct.getDetailedDesc());
+            p.setProductPrice(inputProduct.getProductPrice());
+            p.setVat(inputProduct.getVat());
+            p.setAvailableUnits(inputProduct.getAvailableUnits());
+            updateProductImages(inputProduct,p);
+            if(isDeleted) {
+                p.setDeletedAt(Timestamp.from(Instant.now()));
+            } else {
+                p.setDeletedAt(null);
+            }
+            saveProduct(p);
+        });
+    }
+
 
 }
 

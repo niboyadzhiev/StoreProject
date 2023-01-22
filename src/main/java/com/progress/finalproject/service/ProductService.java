@@ -22,6 +22,7 @@ public interface ProductService {
     void updateProductImages(Product inputProduct, Product productDb);
     void setProductImagesToNewProduct(Product product, long newId);
     void createNewProduct(Product product);
+    void updateProduct(Product inputProduct, Optional<Product> productDb, boolean isDeleted);
 
 
 }

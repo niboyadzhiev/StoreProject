@@ -33,23 +33,9 @@ public class ProductManagementController {
     }
 
     @PostMapping("/productUpdate")
-    public ModelAndView updateOrderStatus (@ModelAttribute Product product, @RequestParam(value = "isDeleted", required = false) boolean isDeleted){
+    public ModelAndView updateProduct (@ModelAttribute Product product, @RequestParam(value = "isDeleted", required = false) boolean isDeleted){
         Optional<Product> productDb = productService.findById(product.getProductId());
-        productDb.ifPresent((p)->{
-            p.setProductName(product.getProductName());
-            p.setProductDesc(product.getProductDesc());
-            p.setDetailedDesc(product.getDetailedDesc());
-            p.setProductPrice(product.getProductPrice());
-            p.setVat(product.getVat());
-            p.setAvailableUnits(product.getAvailableUnits());
-            productService.updateProductImages(product,p);
-            if(isDeleted) {
-                p.setDeletedAt(Timestamp.from(Instant.now()));
-            } else {
-                p.setDeletedAt(null);
-            }
-            productService.saveProduct(p);
-        });
+        productService.updateProduct(product,productDb,isDeleted);
 
         return listAllProducts();
     }
