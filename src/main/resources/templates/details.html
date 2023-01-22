@@ -11,26 +11,6 @@
 <div th:replace="/fragments/header :: navbar"/>
 
 
-
-<!--        <h2 th:text="${product.images[0].imagePath}" class="panel-body">Picture</h2>-->
-<!--        <h3 th:text="${product.productDesc}" class="panel-body">Description</h3>-->
-<!--        <table border="0">-->
-<!--            <tr th:each="image : ${product.images}">-->
-<!--                <td th:text="${image.imagePath}"/>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--        <div th:text="${product.detailedDesc}" class="panel-body">Details</div>-->
-<!--        <div>-->
-<!--            <div th:inline="text" class="col-md-2">Price: [[${product.productPrice}]] $</div>-->
-<!--            <div th:inline="text" class="col-md-9">In Stock: [[${product.availableUnits}]]</div>-->
-<!--            <div th:href="@{'/details'(id=${product.productId})}" class="col-md-3"> Detailed description</div>-->
-<!--            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${product.productId})}" class="col-md-1">-->
-<!--                <button type="button" class="btn btn-primary" th:text="Buy">Buy</button>-->
-<!--            </a>-->
-
-<!--        </div>-->
-<!--        <br></br>-->
-
     <div class="panel-heading">
         <h1 th:text="${product.productName}"></h1>
     </div>
