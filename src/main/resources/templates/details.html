@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+
+<div th:replace="/fragments/header :: navbar"/>
+
+
+
+<!--        <h2 th:text="${product.images[0].imagePath}" class="panel-body">Picture</h2>-->
+<!--        <h3 th:text="${product.productDesc}" class="panel-body">Description</h3>-->
+<!--        <table border="0">-->
+<!--            <tr th:each="image : ${product.images}">-->
+<!--                <td th:text="${image.imagePath}"/>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--        <div th:text="${product.detailedDesc}" class="panel-body">Details</div>-->
+<!--        <div>-->
+<!--            <div th:inline="text" class="col-md-2">Price: [[${product.productPrice}]] $</div>-->
+<!--            <div th:inline="text" class="col-md-9">In Stock: [[${product.availableUnits}]]</div>-->
+<!--            <div th:href="@{'/details'(id=${product.productId})}" class="col-md-3"> Detailed description</div>-->
+<!--            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${product.productId})}" class="col-md-1">-->
+<!--                <button type="button" class="btn btn-primary" th:text="Buy">Buy</button>-->
+<!--            </a>-->
+
+<!--        </div>-->
+<!--        <br></br>-->
+
+    <div class="panel-heading">
+        <h1 th:text="${product.productName}"></h1>
+    </div>
+    <h2 th:text="${product.productDesc}" class="panel-body">Description</h2>
+        <div th:text="${product.detailedDesc}" />
+
+        <div th:each="image : ${product.images}">
+            <div th:if= "${image.imagePath != ''}">
+                <img th:src="@{'/image/'+ ${image.imagePath}}" width="300" height="300"/>
+            </div>
+        </div>
+
+        <div th:inline="text" class="col-md-2">Price: [[${product.productPrice}]] $</div>
+        <div th:inline="text" class="col-md-9">In Stock: [[${product.availableUnits}]]</div>
+<form th:action="@{/addProduct}" method="post" sec:authorize="!hasAuthority('staff')" th:if="${product.availableUnits}>0">
+    <div class="form-group row">
+        <div class="col-md-2 mt-1">
+            <input type="hidden" th:value="${product.ProductId}" name="productId" />
+            <label>Number</label>
+            <input type="number" class="form-control" autocomplete="on" name="number" th:value="1"
+                   min="1" th:max = "${product.availableUnits}"/>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Buy</button>
+</form>
+
+    </div>
+
+
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>

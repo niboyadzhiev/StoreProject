@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+
+
+<div th:replace="/fragments/header :: navbar"/>
+<div class="panel-heading">
+    <h1>Orders Management</h1>
+    <div class="alert alert-info" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></div>
+</div>
+<br>
+
+    <div class="container">
+        <div class="panel-default well" th:each="order : ${allOrdersMap.entrySet()}"  style="width:70%">
+            <table border="1">
+                <th>Order ID </th>
+                <th>Order Date</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Order Status</th>
+                <tr>
+                    <td th:text="${order.getKey().orderId}"/>
+                    <td th:text="${order.getKey().orderDate}"/>
+                    <td th:text="${order.getKey().user.firstName}"/>
+                    <td th:text="${order.getKey().user.LastName}"/>
+                    <td th:text="${order.getKey().user.address}"/>
+                    <td th:text="${order.getKey().user.Phone}"/>
+                    <td th:text="${order.getKey().orderStatus.statusName}"/>
+                </tr>
+            </table>
+                <br>
+            <table border="1">
+                <th>Product </th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <tr th:each="orderDetails : ${order.getValue()}">
+                    <td th:text="${orderDetails.product.productName}"/>
+                    <td th:text="${orderDetails.quantity}"/>
+                    <td th:text="${orderDetails.price}"/>
+                </tr>
+            </table>
+            <form th:action="@{/orderUpdate}" th:method="post">
+                <input type="hidden" th:value="${order.getKey().orderId}" name="orderId" />
+            <select class="form-control" th:name ="statusId">
+                <option th:each="orderStatus : ${orderStatuses}"
+                        th:value="${orderStatus.statusId}"
+                        th:text="${orderStatus.statusName}"
+                        th:selected="${orderStatus.statusId==order.getKey().statusId}">
+                </option>
+                <div class="col-sm-3" style="float: none; margin: 0 auto;">
+                    <input type="submit" class="btn btn-primary btn-block" value="Update"/>
+                </div>
+            </select>
+            </form>
+        </div>
+    </div>
+
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>

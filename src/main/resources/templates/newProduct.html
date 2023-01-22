@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/main.css}"
+      href="../../css/main.css"/>
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+
+
+<div th:replace="/fragments/header :: navbar"/>
+
+    <h1>New product</h1>
+</div>
+<br>
+
+            <form th:action="@{/createProduct}" th:method="post">
+<!--                <input type="hidden" name="productId"/>-->
+            <table>
+                <tr>
+                    <td>Product name<td/>
+                    <td><input size = "10" type="text" name="productName"/>
+                </tr>
+                <tr>
+                    <td>Product description<td/>
+                    <td><input size = "10" type="text" name="productDesc"/>
+                </tr>
+                <tr>
+                    <td>Detailed description<td/>
+                    <td><input size = "10" type="text" name="detailedDesc"/>
+                </tr>
+                <tr>
+                    <td>Product price<td/>
+                    <td><input size = "10" type="text" name="productPrice"/>
+                </tr>
+                <tr>
+                    <td>VAT<td/>
+                    <td><input size = "10" type="text" name="vat"/>
+                </tr>
+                <tr>
+                    <td>Available units<td/>
+                    <td><input size = "10" type="text" name="availableUnits"/>
+                </tr>
+                <tr>
+                    <td>Image 1<td/>
+                    <td><input size = "10" type="text" name="images[0].imagePath"/>
+                </tr>
+                <tr>
+                    <td>Image 2<td/>
+                    <td><input size = "10" type="text" name="images[1].imagePath"/>
+                </tr>
+                <tr>
+                    <td>Image 3<td/>
+                    <td><input size = "10" type="text" name="images[2].imagePath"/>
+                </tr>
+
+            </table>
+                <div class="col-sm-3" style="float: none; margin: 0 auto;">
+                    <input type="submit" class="btn btn-primary btn-block" value="Create"/><br><br>
+                </div>
+            </form>
+
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>

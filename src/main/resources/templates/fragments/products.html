@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+</head>
+
+<body>
+
+<div th:fragment="products">
+
+    <div class="panel-default well" th:each="product : ${products}">
+        <div class="panel-heading">
+            <a th:href="@{'/details'(id=${product.productId})}">
+                <h1 th:text="${product.productName}"></h1>
+            </a>
+        </div>
+        <div th:if= "${product.images[0].imagePath != ''}">
+        <img th:src="@{'/image/'+ ${product.images[0].imagePath}}" width="300" height="300"/>
+        </div>
+        <h3 th:text="${product.productDesc}" class="panel-body">Description</h3>
+        <div class="row panel-footer">
+            <div th:inline="text" class="col-md-2">Price: [[${product.productPrice}]] $</div>
+            <div th:inline="text" class="col-md-9">In Stock: [[${product.availableUnits}]]</div>
+            <br/>
+            <h4>
+            <a th:href="@{'/details'(id=${product.productId})}" class="col-md-4"> Detailed description </a>
+            </h4>
+            <form th:action="@{/addProduct}" method="post" sec:authorize="!hasAuthority('staff')" th:if="${product.availableUnits}>0">
+                <div class="form-group row">
+                    <div class="col-md-2 mt-1">
+                        <input type="hidden" th:value="${product.ProductId}" name="productId" />
+                        <label>Number</label>
+                        <input type="number" class="form-control" autocomplete="on" name="number" th:value="1"
+                               min="1" th:max = "${product.availableUnits}"/>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Buy</button>
+            </form>
+<!--            <form th:action="@{/addProduct}" method="post" th:object="${form}" >-->
+<!--                <div class="form-group row">-->
+<!--                    <div class="col-md-2 mt-1">-->
+<!--                        <input type="hidden" th:value="${product.ProductId}" name="productId" />-->
+<!--                        <label for="add">Number</label>-->
+<!--                        <input type="number" class="form-control" id="add" autocomplete="off" th:field="${form.number}"-->
+<!--                               min="1" th:max = "${product.availableUnits}"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <button class="btn btn-primary" type="submit">Buy</button>-->
+<!--            </form>-->
+<!--            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${product.productId})}" class="col-md-1">-->
+<!--                <button type="button" class="btn btn-primary" th:text="Buy">Buy</button>-->
+<!--            </a>-->
+
+        </div>
+        <br></br>
+    </div>
+</div>
+
+</body>
+</html>

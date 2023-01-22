@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="/fragments/header :: header"/>
+</head>
+
+<body>
+
+
+<div th:replace="/fragments/header :: navbar"/>
+<div class="panel-heading">
+    <h1>My Orders</h1>
+</div>
+
+    <div class="container">
+        <div class="panel-default well" th:each="order : ${ordersMap.entrySet()}">
+            <table border="1">
+                <th>Order ID </th>
+                <th>Order Date</th>
+                <th>Order Status</th>
+                <tr>
+                    <td th:text="${order.getKey().orderId}"/>
+                    <td th:text="${order.getKey().orderDate}"/>
+                    <td th:text="${order.getKey().orderStatus.statusName}"/>
+                </tr>
+            </table>
+                <br>
+            <table border="1">
+                <th>Product </th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <tr th:each="orderDetails : ${order.getValue()}">
+                    <td th:text="${orderDetails.product.productName}"/>
+                    <td th:text="${orderDetails.quantity}"/>
+                    <td th:text="${orderDetails.price}"/>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+<div th:replace="/fragments/footer :: footer"/>
+
+</body>
+</html>
