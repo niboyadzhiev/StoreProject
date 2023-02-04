@@ -40,25 +40,18 @@ public class RegistrationController {
             bindingResult
                     .rejectValue("email", "error.user",
                             "There is already a user registered with the email provided. Please log in");
-
         }
-
         if (userService.isStaff(resultUser)) {
             bindingResult
                     .rejectValue("email", "error.user",
                             "Administrators are not allowed to purchase. Please use another email.");
-
         }
-
         ModelAndView modelAndView = new ModelAndView();
-
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("/registration");
             modelAndView.addObject("showForm", 1);
         } else {
-
             userService.registerUser(userService.getUserPasswordMap(user,true));
-
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.addObject("showForm", 0);

@@ -19,19 +19,24 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmail(User receiver, String password) {
-
-        // Creating a simple mail message
-        SimpleMailMessage mailMessage
-                = new SimpleMailMessage();
-
-        // Setting up necessary details
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom(sender);
         mailMessage.setTo(receiver.getEmail());
         mailMessage.setText(String.format(PASSWORD_TEMPLATE, receiver.getFirstName(), receiver.getLastName(),password));
         mailMessage.setSubject("Registration");
-
-        // Sending the mail
         javaMailSender.send(mailMessage);
 
     }
+
+    @Override
+    public void sendNewPassword(User receiver, String password) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(sender);
+        mailMessage.setTo(receiver.getEmail());
+        mailMessage.setText(String.format(NEW_PASSWORD_TEMPLATE, receiver.getFirstName(), receiver.getLastName(),password));
+        mailMessage.setSubject("New password");
+        javaMailSender.send(mailMessage);
+    }
+
+
 }

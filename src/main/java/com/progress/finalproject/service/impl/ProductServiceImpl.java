@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> searchProductsByText(String searchParam1, String searchParam2, Pageable pageable) {
-        return productRepository.findAllByProductNameContainingOrProductDescContaining(searchParam1, searchParam2, pageable);
+        return productRepository.findAllByProductNameContainingIgnoreCaseOrProductDescContainingIgnoreCase(searchParam1, searchParam2, pageable);
     }
 
     @Override

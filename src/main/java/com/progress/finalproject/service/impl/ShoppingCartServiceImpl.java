@@ -23,11 +23,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.*;
 
-/**
- * Shopping Cart is implemented with a Map, and as a session bean
- *
- * @author Dusan
- */
 @Service
 @SessionScope
 @Transactional
@@ -60,13 +55,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void addProduct(Product product, int quantity) {
         products.put(product, products.getOrDefault(product, 0) + quantity);
-//        if (products.containsKey(product)) {
-//            products.replace(product, products.get(product) + quantity);
-//        } else {
-//            products.put(product, quantity);
-//        }
-
-
     }
 
     @Override
@@ -95,12 +83,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 throw new NotEnoughProductsInStockException(product.get());
             entry.getKey().setAvailableUnits(product.get().getAvailableUnits() - entry.getValue());
         }
-
     }
-
-
-
-
     @Override
     public void updateAvailability() {
         productRepository.saveAll(products.keySet());
@@ -108,13 +91,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         products.clear();
 
     }
-
-
-
-
-
-
-
     @Override
     public BigDecimal getTotal() {
         return products.entrySet().stream()
@@ -122,7 +98,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
     }
-
     @Override
     public Order createOrder(User user) {
         Order order = new Order();
@@ -132,7 +107,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         orderRepository.saveAndFlush(order);
         return order;
     }
-
     @Override
     public void generateOrderDetails(Order order) {
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
@@ -158,6 +132,4 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
     }
-
-
 }

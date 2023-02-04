@@ -24,7 +24,6 @@ public class OrderManagementController {
         modelAndView.addObject("allOrdersMap", orderService.getOrderDetailsMap());
         modelAndView.addObject("orderStatuses", orderStatusService.getAllOrderStatuses());
         modelAndView.setViewName("orderManagement");
-
         return modelAndView;
     }
 
@@ -44,7 +43,4 @@ public class OrderManagementController {
         modelAndView.setViewName("redirect:/orderManagement");
         return modelAndView;
     }
-
-
-
 }

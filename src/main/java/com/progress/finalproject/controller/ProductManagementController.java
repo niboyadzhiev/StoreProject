@@ -36,10 +36,8 @@ public class ProductManagementController {
     public ModelAndView updateProduct (@ModelAttribute Product product, @RequestParam(value = "isDeleted", required = false) boolean isDeleted){
         Optional<Product> productDb = productService.findById(product.getProductId());
         productService.updateProduct(product,productDb,isDeleted);
-
         return listAllProducts();
     }
-
 
     @GetMapping ("/newProduct")
     public String newProduct () {
@@ -50,5 +48,4 @@ public class ProductManagementController {
         productService.createNewProduct(product);
         return listAllProducts();
     }
-
 }

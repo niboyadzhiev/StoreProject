@@ -11,55 +11,37 @@
 
 
 <div th:replace="/fragments/header :: navbar"/>
-<div class="panel-heading">
-    <h1>Product management</h1>
-    <h3><a th:href="@{/newProduct}">New product</a></h3>
-</div>
-<br>
-
-            <form th:action="@{/productUpdate}" th:method="post"  th:each="product : ${allProducts}">
-                <input type="hidden" th:value="${product.productId}" name="productId"/>
-            <table border="2">
-                <th>Product name</th>
-                <th>Product description</th>
-                <th>Detailed description name</th>
-                <th>Price</th>
-                <th>VAT</th>
-                <th>Created at</th>
-
-                <th>Available units</th>
-                <th>Image 1</th>
-                <th>Image 2</th>
-                <th>Image 3</th>
-                <th>Deleted at</th>
-                <th>Delete</th>
-                <tr>
-                    <td><input size = "10" type="text" th:value="${product.productName}" name="productName"/></td>
-                    <td><input size = "10" type="text" th:value="${product.productDesc}" name="productDesc"/></td>
-                    <td><input size = "10" type="text" th:value="${product.detailedDesc}" name="detailedDesc"/></td>
-                    <td><input size = "10" type="text" th:value="${product.productPrice}" name="productPrice"/></td>
-                    <td><input size = "10" type="text" th:value="${product.vat}" name="vat"/></td>
-                    <td th:text="${product.createdAt}"/>
-
-                    <td><input size = "10" type="text" th:value="${product.availableUnits}" name="availableUnits"/></td>
-                    <td th:if="${product.images.size() > 0}" ><input size = "10" type="text" th:value="${product.images[0].imagePath}" name="images[0].imagePath"/></td>
-                    <td th:if="${product.images.size() < 1}" ><input size = "10" type="text" name="images[0].imagePath" /></td>
-                    <input th:if="${product.images.size() > 0}" type="hidden" th:value="${product.images[0].imageId}" name="images[0].imageId"/></td>
-                    <td th:if="${product.images.size()} > 1" ><input size = "10" type="text" th:value="${product.images[1].imagePath}" name="images[1].imagePath"/></td>
-                    <td th:if="${product.images.size()} < 2" ><input size = "10" type="text" name="images[1].imagePath"/></td>
-                    <input th:if="${product.images.size() > 1}" type="hidden" th:value="${product.images[1].imageId}" name="images[1].imageId"/></td>
-                    <td th:if="${product.images.size()} > 2" ><input size = "10" type="text" th:value="${product.images[2].imagePath}" name="images[2].imagePath"/></td>
-                    <td th:if="${product.images.size()} < 3" ><input size = "10" type="text" name="images[2].imagePath"/></td>
-                    <input th:if="${product.images.size() > 2}" type="hidden" th:value="${product.images[2].imageId}" name="images[2].imageId"/></td>
-                    <td th:text="${product.deletedAt}"/></td>
-                    <td><input type="checkbox" name="isDeleted" th:checked="${product.deletedAt} != null"/></td>
+<div class="alert alert-info" th:if="${successMessage}" th:utext="${successMessage}"></div>
+            <table class="table table-striped">
+                 <thead>
+                <th>Email</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th class="text-center">Is staff</th>
+                <th class="text-center">Submit</th>
+                 </thead>
+                <body>
+                <tr th:each="user : ${users}">
+                    <form th:action="@{/userUpdate}" th:method="post">
+                        <input type="hidden" th:value="${user.userId}" name="userId"/>
+                        <input type="hidden" th:value="${user.firstName}" name="firstName"/>
+                        <input type="hidden" th:value="${user.lastName}" name="lastName"/>
+                        <input type="hidden" th:value="${user.address}" name="address"/>
+                        <input type="hidden" th:value="${user.email}" name="email"/>
+                        <input type="hidden" th:value="${user.registrationDate}" name="registrationDate"/>
+                        <input type="hidden" th:value="${user.password}" name="password"/>
+                        <input type="hidden" th:value="${user.phone}" name="phone"/>
+                        <td th:text="${user.email}"/>
+                        <td th:text="${user.firstName}"/>
+                        <td th:text="${user.lastName}"/>
+                        <td align="center"><input type="checkbox" name="isStaff" th:checked="${user.roleId} == 2"/></td>
+                        <td align="center"> <input type="submit" value="Update"><td/>
+                    </form>
                 </tr>
-
+                </body>
             </table>
-                <div class="col-sm-3" style="float: none; margin: 0 auto;">
-                    <input type="submit" class="btn btn-primary btn-block" value="Update"/><br><br>
-                </div>
-            </form>
+
+
 
 
 <div th:replace="/fragments/footer :: footer"/>

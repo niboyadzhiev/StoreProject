@@ -18,18 +18,14 @@ public class HomeController {
 
 
     static final int INITIAL_PAGE = 0;
-
     @Value("${pictures.directory}")
     private String imagesFolder;
-    static int PAGE_SIZE = 2;
-
+    static final int PAGE_SIZE = 5;
     private final ProductService productService;
-
     @Autowired
     public HomeController(ProductService productService) {
         this.productService = productService;
     }
-
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView findProducts(@RequestParam(value = "searchTerm", required = false) String searchTerm, @RequestParam("page") Optional<Integer> page) throws IOException {
@@ -41,22 +37,17 @@ public class HomeController {
             products = productService.searchProductsByText(searchTerm,searchTerm, PageRequest.of(evalPage, PAGE_SIZE));
         }
         Pager pager = new Pager(products);
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("products", products);
         modelAndView.addObject("searchTerm", searchTerm);
         modelAndView.addObject("pager", pager);
-
         modelAndView.setViewName("/home");
         return modelAndView;
     }
 
     @GetMapping("/details")
     public ModelAndView home(@RequestParam("id") long productId) {
-
         Optional<Product> product = productService.findById(productId);
-
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("product", product.get());
         modelAndView.setViewName("/details");
@@ -67,14 +58,11 @@ public class HomeController {
     public @ResponseBody byte[] getImage(@PathVariable String path) throws IOException {
         InputStream in = new BufferedInputStream(new FileInputStream(imagesFolder + path + ".jpg"));
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
         int nRead;
         byte[] data = new byte[16384];
-
         while ((nRead = in.read(data, 0, data.length)) != -1) {
             buffer.write(data, 0, nRead);
         }
-
         return buffer.toByteArray();
     }
 

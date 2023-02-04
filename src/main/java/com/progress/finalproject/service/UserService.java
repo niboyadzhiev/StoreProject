@@ -3,6 +3,7 @@ package com.progress.finalproject.service;
 import com.progress.finalproject.model.user.User;
 
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -13,6 +14,8 @@ public interface UserService {
     public static final String WALKIN = "walkin";
 
     Optional<User> findByEmail(String email);
+
+    List<User> getAllRegisteredUsers();
 
     User saveUser(User user);
 
@@ -38,7 +41,9 @@ public interface UserService {
     String getPasswordFromMap (Map<User, String> map);
     void registerUser(Map<User, String> userPasswordMap);
 
+    void changePassword(String email);
 
+    void updateUserRole(User user, boolean isStaff);
 
-
+    void updatePersonalData(User inputUser);
 }

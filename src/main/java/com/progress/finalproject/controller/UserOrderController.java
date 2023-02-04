@@ -31,12 +31,8 @@ public class UserOrderController {
         for (Order order : orders) {
             customerOrdersWithDetails.put(order, orderService.getOrderDetails(order.getOrderId()));
         }
-
-
         modelAndView.addObject("ordersMap", customerOrdersWithDetails);
         modelAndView.setViewName("/myOrders");
-
-
         return modelAndView;
     }
 }

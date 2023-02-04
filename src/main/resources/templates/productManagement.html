@@ -38,7 +38,6 @@
                 <body>
                     <tr th:each="product : ${allProducts}">
                         <form th:action="@{/productUpdate}" th:method="post" >
-
                         <input type="hidden" th:value="${product.productId}" name="productId"/>
                         <td ><input class="form-control" type="text" th:value="${product.productName}" name="productName"/></td>
                         <td><input class="form-control" type="text" th:value="${product.productDesc}" name="productDesc"/></td>

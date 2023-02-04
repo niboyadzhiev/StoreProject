@@ -45,6 +45,9 @@
                     <li class="active"><a th:href="@{/myOrders}">My orders</a></li>
                 </ul>
                 <ul class="nav navbar-nav" sec:authorize="hasAuthority('staff')">
+                    <li class="active"><a th:href="@{/userManagement}">User management</a></li>
+                </ul>
+                <ul class="nav navbar-nav" sec:authorize="hasAuthority('staff')">
                     <li class="active"><a th:href="@{/productManagement}">Product management</a></li>
                 </ul>
                 <ul class="nav navbar-nav" sec:authorize="hasAuthority('staff')">
@@ -63,8 +66,21 @@
                 </ul>
                 <!-- show sign out only if user is authenticated -->
                 <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-                    <li class="active"><a th:href="@{/logout}">Sign Out</a></li>
+<!--                    <li class="active"><a th:href="@{/logout}">Sign Out</a></li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Profile
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/changePassword}">Change password</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/personalData}">Personal data</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/logout}">Sign out</a>
+
+                        </div>
+                    </li>
                 </ul>
+
             </div>
         </div>
     </nav>

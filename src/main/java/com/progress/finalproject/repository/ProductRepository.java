@@ -13,7 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByDeletedAtIsNull (Pageable pageable);
 
 
-    Page<Product> findAllByProductNameContainingOrProductDescContaining(String searchParam1, String searchParam2, Pageable pageable);
+    Page<Product> findAllByProductNameContainingIgnoreCaseOrProductDescContainingIgnoreCase(String searchParam1, String searchParam2, Pageable pageable);
 
 
 }

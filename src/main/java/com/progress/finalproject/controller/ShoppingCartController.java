@@ -64,13 +64,10 @@ public class ShoppingCartController {
         modelAndView.addObject("products", products);
         modelAndView.addObject("searchTerm", searchTerm);
         modelAndView.addObject("pager", pager);
-
         Optional<Product> product = productService.findById(Long.parseLong(formData.get("productId").get(0)));
         shoppingCartService.addProduct(product.get(), Integer.parseInt(formData.get("number").get(0)));
         modelAndView.setViewName("/home");
-
         return modelAndView;
-
     }
 
     @GetMapping("/shoppingCart/removeProduct/{productId}")
@@ -93,7 +90,6 @@ public class ShoppingCartController {
         } else {
             user = new User();
         }
-
         modelAndView.addObject("user", user);
         modelAndView.addObject("products", shoppingCartService.getProductsInCart());
         modelAndView.setViewName("/checkout");
@@ -120,30 +116,11 @@ public class ShoppingCartController {
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("/checkout");
-            return modelAndView;
         }
-
         User userToUse = null;
         shoppingCartService.placeOrder(userService.getUserPasswordMap(user,registerCheckbox));
-
         modelAndView.addObject("successMessage", "Successful order. Thank you!");
-
         modelAndView.setViewName("/checkout");
-
         return modelAndView;
     }
-
-
-//
-//    @PostMapping("/shoppingCart/checkout")
-//    public ModelAndView checkout(@RequestBody MultiValueMap<String, String> checkoutData) {
-//        User user = new User();
-//
-//        for (Map.Entry<String, List<String>> param : checkoutData.entrySet()) {
-//            System.out.println(param.getKey()+" "+ Arrays.toString(param.getValue().toArray()));
-//        }
-//        return new ModelAndView();
-//    }
-
-
 }

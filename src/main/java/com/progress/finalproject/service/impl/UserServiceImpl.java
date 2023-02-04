@@ -6,6 +6,7 @@ import com.progress.finalproject.service.EmailService;
 import com.progress.finalproject.service.UserService;
 import com.progress.finalproject.util.CustomerPasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,6 +36,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<User> getAllRegisteredUsers() {
+        return userRepository.findByRoleRoleNameNotOrderByRoleIdDesc("walkin");
     }
 
     @Override
@@ -63,37 +70,14 @@ public class UserServiceImpl implements UserService {
             theUser.setAddress(user.getAddress());
             theUser.setPhone(user.getPhone());
         });
-
         return resultUser.orElseGet(() -> {
             setDefaultPassword(user);
             setRegistrationDate(user);
             user.setRoleId(3);
             return user;
         });
-
-
     }
 
-//    public User returnCustomer(User user) {
-//        Optional<User> resultUser = userRepository.findByEmail(user.getEmail());
-//        resultUser.ifPresent((theUser) -> {
-//            theUser.setFirstName(user.getFirstName());
-//            theUser.setLastName(user.getLastName());
-//            theUser.setAddress(user.getAddress());
-//            theUser.setPhone(user.getPhone());
-//            theUser.setRoleId(1);
-//            theUser.setPassword(generatePassword(user));
-//            System.out.println(user.getUserId() + " " + user.getFirstName() + " " + user.getPassword() + " " + user.getRoleId());
-//        });
-//
-//        return resultUser.orElseGet(() -> {
-//
-//            user.setPassword(generatePassword(user));
-//            setRegistrationDate(user);
-//            user.setRoleId(1);
-//            return user;
-//        });
-//    }
 
     @Override
      public String generatePassword() {
@@ -116,8 +100,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    This whole map<User, String> story is to be able to store the raw password.
-//    After encryption, it is lost, so I store it in the map.
     public Map<User, String> getUserPasswordMap(User user, boolean registerCheckbox) {
         Map<User, String> map = new HashMap<>();
         Optional<User> resultUser = userRepository.findByEmail(user.getEmail());
@@ -148,7 +130,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    those two methods work, because the map contains only one key.
     public User getUserFromMap(Map<User, String> map) {
         User user = null;
         for (Map.Entry<User, String> entry : map.entrySet()) {
@@ -174,5 +155,41 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    @Transactional
+    public void changePassword(String email) {
+        findByEmail(email).ifPresent((u)->{
+            if(!u.getRole().getRoleName().equals(WALKIN)) {
+                String newPassword = generatePassword();
+                u.setPassword(encodePassword(newPassword));
+                emailService.sendNewPassword(u,newPassword);
+            }
+        });
 
+    }
+    @Override
+    public void updateUserRole(User user, boolean isStaff) {
+        userRepository.findOneByUserId(user.getUserId()).ifPresent((u)->{
+            user.setRegistrationDate(u.getRegistrationDate());
+            if (isStaff) {
+                user.setRoleId(2);
+            } else {
+                user.setRoleId(1);
+            }
+        });
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void updatePersonalData(User inputUser) {
+        Optional<User> userDb = userRepository.findOneByUserId(inputUser.getUserId());
+        userDb.ifPresent(u -> {
+            u.setFirstName(inputUser.getFirstName());
+            u.setLastName(inputUser.getFirstName());
+            u.setEmail(inputUser.getEmail());
+            u.setAddress(inputUser.getAddress());
+            u.setPhone(inputUser.getPhone());
+            saveUser(u);
+        });
+    }
 }

@@ -15,7 +15,7 @@
             </a>
         </div>
         <div th:if= "${product.images[0].imagePath != ''}">
-        <img th:src="@{'/image/'+ ${product.images[0].imagePath}}" width="300" height="300"/>
+        <img th:src="@{'/image/'+ ${product.images[0].imagePath}}" width="300"/>
         </div>
         <h3 th:text="${product.productDesc}" class="panel-body">Description</h3>
         <div class="row panel-footer">

@@ -19,7 +19,7 @@
 
         <div th:each="image : ${product.images}">
             <div th:if= "${image.imagePath != ''}">
-                <img th:src="@{'/image/'+ ${image.imagePath}}" width="300" height="300"/>
+                <img th:src="@{'/image/'+ ${image.imagePath}}" width="300"/>
             </div>
         </div>
 

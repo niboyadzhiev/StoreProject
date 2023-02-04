@@ -20,7 +20,6 @@ public class RestController {
     public Product product (@RequestParam("id") long productId) {
         return productService.findById(productId).orElse(new Product());
     }
-
     @RequestMapping(value = "/getOrder", method = RequestMethod.GET)
     public Order order (@RequestParam("id") long orderId) {
         return orderService.findOrderById(orderId).orElse(new Order());

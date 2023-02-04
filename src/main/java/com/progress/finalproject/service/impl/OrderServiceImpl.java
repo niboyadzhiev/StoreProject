@@ -55,7 +55,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateAvailability(long orderId, long fromStatus, long toStatus) throws NotEnoughProductsInStockException {
         if (toStatus == 5) {
-            System.out.println("first if - toStaus7");
             for (OrderDetails od : orderDetailsRepository.findAllByOrderId(orderId)) {
                 productService.findById(od.getProductId()).ifPresent(product -> {
                     product.setAvailableUnits((int) (product.getAvailableUnits() + od.getQuantity()));
@@ -64,7 +63,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         if (fromStatus == 5) {
-            System.out.println("second if - fromStaus7");
             for (OrderDetails od : orderDetailsRepository.findAllByOrderId(orderId)) {
                 Optional<Product> product = productService.findById(od.getProductId());
                 if (product.get().getAvailableUnits() < od.getQuantity()) {
@@ -84,8 +82,6 @@ public class OrderServiceImpl implements OrderService {
         Map<Order, List<OrderDetails>> allOrdersWithDetails = new TreeMap<>();
         for (Order order : getAllOrders()) {
             allOrdersWithDetails.put(order, getOrderDetails(order.getOrderId()));
-
-
         }
         return allOrdersWithDetails;
     }
