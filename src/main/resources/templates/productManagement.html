@@ -17,49 +17,57 @@
 </div>
 <br>
 
-            <form th:action="@{/productUpdate}" th:method="post"  th:each="product : ${allProducts}">
-                <input type="hidden" th:value="${product.productId}" name="productId"/>
-            <table border="2">
-                <th>Product name</th>
-                <th>Product description</th>
-                <th>Detailed description name</th>
-                <th>Price</th>
-                <th>VAT</th>
-                <th>Created at</th>
 
-                <th>Available units</th>
-                <th>Image 1</th>
-                <th>Image 2</th>
-                <th>Image 3</th>
-                <th>Deleted at</th>
-                <th>Delete</th>
-                <tr>
-                    <td><input size = "10" type="text" th:value="${product.productName}" name="productName"/></td>
-                    <td><input size = "10" type="text" th:value="${product.productDesc}" name="productDesc"/></td>
-                    <td><input size = "10" type="text" th:value="${product.detailedDesc}" name="detailedDesc"/></td>
-                    <td><input size = "10" type="text" th:value="${product.productPrice}" name="productPrice"/></td>
-                    <td><input size = "10" type="text" th:value="${product.vat}" name="vat"/></td>
-                    <td th:text="${product.createdAt}"/>
+<div class="table-responsive">
+            <table border="0" class="table table-striped w-auto">
+                <head>
+                    <th>Product name</th>
+                    <th>Product description</th>
+                    <th>Detailed description name</th>
+                    <th>Price</th>
+                    <th>VAT</th>
+                    <th>Created at</th>
+                    <th>Available units</th>
+                    <th>Image 1</th>
+                    <th>Image 2</th>
+                    <th>Image 3</th>
+                    <th>Deleted at</th>
+                    <th>Delete</th>
+                    <th>Update</th>
+                </head>
+                <body>
+                    <tr th:each="product : ${allProducts}">
+                        <form th:action="@{/productUpdate}" th:method="post" >
 
-                    <td><input size = "10" type="text" th:value="${product.availableUnits}" name="availableUnits"/></td>
-                    <td th:if="${product.images.size() > 0}" ><input size = "10" type="text" th:value="${product.images[0].imagePath}" name="images[0].imagePath"/></td>
-                    <td th:if="${product.images.size() < 1}" ><input size = "10" type="text" name="images[0].imagePath" /></td>
-                    <input th:if="${product.images.size() > 0}" type="hidden" th:value="${product.images[0].imageId}" name="images[0].imageId"/></td>
-                    <td th:if="${product.images.size()} > 1" ><input size = "10" type="text" th:value="${product.images[1].imagePath}" name="images[1].imagePath"/></td>
-                    <td th:if="${product.images.size()} < 2" ><input size = "10" type="text" name="images[1].imagePath"/></td>
-                    <input th:if="${product.images.size() > 1}" type="hidden" th:value="${product.images[1].imageId}" name="images[1].imageId"/></td>
-                    <td th:if="${product.images.size()} > 2" ><input size = "10" type="text" th:value="${product.images[2].imagePath}" name="images[2].imagePath"/></td>
-                    <td th:if="${product.images.size()} < 3" ><input size = "10" type="text" name="images[2].imagePath"/></td>
-                    <input th:if="${product.images.size() > 2}" type="hidden" th:value="${product.images[2].imageId}" name="images[2].imageId"/></td>
-                    <td th:text="${product.deletedAt}"/></td>
-                    <td><input type="checkbox" name="isDeleted" th:checked="${product.deletedAt} != null"/></td>
-                </tr>
+                        <input type="hidden" th:value="${product.productId}" name="productId"/>
+                        <td ><input class="form-control" type="text" th:value="${product.productName}" name="productName"/></td>
+                        <td><input class="form-control" type="text" th:value="${product.productDesc}" name="productDesc"/></td>
+                        <td><input class="form-control" type="text" th:value="${product.detailedDesc}" name="detailedDesc"/></td>
+                        <td><input class="form-control" type="text" th:value="${product.productPrice}" name="productPrice"/></td>
+                        <td><input class="form-control" type="text" th:value="${product.vat}" name="vat"/></td>
+                        <td th:text="${product.createdAt}"/>
+
+                        <td><input class="form-control" type="text" th:value="${product.availableUnits}" name="availableUnits"/></td>
+                        <td th:if="${product.images.size() > 0}" ><input class="form-control" type="text" th:value="${product.images[0].imagePath}" name="images[0].imagePath"/></td>
+                        <td th:if="${product.images.size() < 1}" ><input class="form-control" type="text" name="images[0].imagePath" /></td>
+                        <input th:if="${product.images.size() > 0}" type="hidden" th:value="${product.images[0].imageId}" name="images[0].imageId"/></td>
+                        <td th:if="${product.images.size()} > 1" ><input class="form-control" type="text" th:value="${product.images[1].imagePath}" name="images[1].imagePath"/></td>
+                        <td th:if="${product.images.size()} < 2" ><input class="form-control" type="text" name="images[1].imagePath"/></td>
+                        <input th:if="${product.images.size() > 1}" type="hidden" th:value="${product.images[1].imageId}" name="images[1].imageId"/></td>
+                        <td th:if="${product.images.size()} > 2" ><input class="form-control" type="text" th:value="${product.images[2].imagePath}" name="images[2].imagePath"/></td>
+                        <td th:if="${product.images.size()} < 3" ><input class="form-control" type="text" name="images[2].imagePath"/></td>
+                        <input th:if="${product.images.size() > 2}" type="hidden" th:value="${product.images[2].imageId}" name="images[2].imageId"/></td>
+                        <td th:text="${product.deletedAt}"/></td>
+                        <td align="center"><input type="checkbox" name="isDeleted" th:checked="${product.deletedAt} != null"/></td>
+                            <td align="center"> <input type="submit" value="Update"><td/>
+                        </form>
+                    </tr>
+                </body>
 
             </table>
-                <div class="col-sm-3" style="float: none; margin: 0 auto;">
-                    <input type="submit" class="btn btn-primary btn-block" value="Update"/><br><br>
-                </div>
-            </form>
+    </div>
+
+
 
 
 <div th:replace="/fragments/footer :: footer"/>
