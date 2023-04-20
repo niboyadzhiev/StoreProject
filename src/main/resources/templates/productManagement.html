@@ -4,13 +4,13 @@
       href="../../css/main.css"/>
 
 <head>
-    <div th:replace="/fragments/header :: header"/>
+    <div th:replace="fragments/header :: header"/>
 </head>
 
 <body>
 
 
-<div th:replace="/fragments/header :: navbar"/>
+<div th:replace="fragments/header :: navbar"/>
 <div class="panel-heading">
     <h1>Product management</h1>
     <h3><a th:href="@{/newProduct}">New product</a></h3>
@@ -69,7 +69,7 @@
 
 
 
-<div th:replace="/fragments/footer :: footer"/>
+<div th:replace="fragments/footer :: footer"/>
 
 </body>
 </html>

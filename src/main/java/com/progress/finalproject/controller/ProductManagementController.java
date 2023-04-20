@@ -27,7 +27,7 @@ public class ProductManagementController {
         ModelAndView modelAndView = new ModelAndView();
         List<Product> productList = productService.findAllProducts();
         modelAndView.addObject("allProducts", productList);
-        modelAndView.setViewName("/productManagement");
+        modelAndView.setViewName("productManagement");
 
         return modelAndView;
     }
@@ -41,7 +41,7 @@ public class ProductManagementController {
 
     @GetMapping ("/newProduct")
     public String newProduct () {
-        return "/newProduct";
+        return "newProduct";
     }
     @PostMapping("/createProduct")
     public ModelAndView createProduct (@ModelAttribute Product product) {

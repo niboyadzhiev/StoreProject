@@ -29,7 +29,7 @@ public class RegistrationController {
         User user = new User();
         modelAndView.addObject("user", user);
         modelAndView.addObject("showForm", 1);
-        modelAndView.setViewName("/registration");
+        modelAndView.setViewName("registration");
         return modelAndView;
     }
 
@@ -48,14 +48,14 @@ public class RegistrationController {
         }
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("/registration");
+            modelAndView.setViewName("registration");
             modelAndView.addObject("showForm", 1);
         } else {
             userService.registerUser(userService.getUserPasswordMap(user,true));
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.addObject("showForm", 0);
-            modelAndView.setViewName("/registration");
+            modelAndView.setViewName("registration");
         }
         return modelAndView;
     }

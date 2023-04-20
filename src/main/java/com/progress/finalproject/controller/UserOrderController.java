@@ -32,7 +32,7 @@ public class UserOrderController {
             customerOrdersWithDetails.put(order, orderService.getOrderDetails(order.getOrderId()));
         }
         modelAndView.addObject("ordersMap", customerOrdersWithDetails);
-        modelAndView.setViewName("/myOrders");
+        modelAndView.setViewName("myOrders");
         return modelAndView;
     }
 }

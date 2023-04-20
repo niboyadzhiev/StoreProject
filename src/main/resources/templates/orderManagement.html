@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:replace="/fragments/header :: header"/>
+    <div th:replace="fragments/header :: header"/>
 </head>
 
 <body>
 
 
-<div th:replace="/fragments/header :: navbar"/>
+<div th:replace="fragments/header :: navbar"/>
 <div class="panel-heading">
     <h1>Orders Management</h1>
     <div class="alert alert-info" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></div>
@@ -65,7 +65,7 @@
     </div>
 
 
-<div th:replace="/fragments/footer :: footer"/>
+<div th:replace="fragments/footer :: footer"/>
 
 </body>
 </html>

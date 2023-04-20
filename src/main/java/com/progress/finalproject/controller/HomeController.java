@@ -41,7 +41,7 @@ public class HomeController {
         modelAndView.addObject("products", products);
         modelAndView.addObject("searchTerm", searchTerm);
         modelAndView.addObject("pager", pager);
-        modelAndView.setViewName("/home");
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 
@@ -50,7 +50,7 @@ public class HomeController {
         Optional<Product> product = productService.findById(productId);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("product", product.get());
-        modelAndView.setViewName("/details");
+        modelAndView.setViewName("details");
         return modelAndView;
     }
 

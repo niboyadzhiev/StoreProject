@@ -44,7 +44,7 @@ public class ShoppingCartController {
 
     @GetMapping("/shoppingCart")
     public ModelAndView shoppingCart() {
-        ModelAndView modelAndView = new ModelAndView("/shoppingCart");
+        ModelAndView modelAndView = new ModelAndView("shoppingCart");
         modelAndView.addObject("products", shoppingCartService.getProductsInCart());
         modelAndView.addObject("total", shoppingCartService.getTotal().toString());
         return modelAndView;
@@ -66,7 +66,7 @@ public class ShoppingCartController {
         modelAndView.addObject("pager", pager);
         Optional<Product> product = productService.findById(Long.parseLong(formData.get("productId").get(0)));
         shoppingCartService.addProduct(product.get(), Integer.parseInt(formData.get("number").get(0)));
-        modelAndView.setViewName("/home");
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 
@@ -92,7 +92,7 @@ public class ShoppingCartController {
         }
         modelAndView.addObject("user", user);
         modelAndView.addObject("products", shoppingCartService.getProductsInCart());
-        modelAndView.setViewName("/checkout");
+        modelAndView.setViewName("checkout");
         return modelAndView;
     }
 
@@ -115,12 +115,13 @@ public class ShoppingCartController {
         }
 
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("/checkout");
+            modelAndView.setViewName("checkout");
+        } else {
+
+            shoppingCartService.placeOrder(userService.getUserPasswordMap(user, registerCheckbox));
+            modelAndView.addObject("successMessage", "Successful order. Thank you!");
+            modelAndView.setViewName("checkout");
         }
-        User userToUse = null;
-        shoppingCartService.placeOrder(userService.getUserPasswordMap(user,registerCheckbox));
-        modelAndView.addObject("successMessage", "Successful order. Thank you!");
-        modelAndView.setViewName("/checkout");
         return modelAndView;
     }
 }

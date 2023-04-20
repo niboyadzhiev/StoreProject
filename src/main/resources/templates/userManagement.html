@@ -4,13 +4,13 @@
       href="../../css/main.css"/>
 
 <head>
-    <div th:replace="/fragments/header :: header"/>
+    <div th:replace="fragments/header :: header"/>
 </head>
 
 <body>
 
 
-<div th:replace="/fragments/header :: navbar"/>
+<div th:replace="fragments/header :: navbar"/>
 <div class="alert alert-info" th:if="${successMessage}" th:utext="${successMessage}"></div>
             <table class="table table-striped">
                  <thead>
@@ -44,7 +44,7 @@
 
 
 
-<div th:replace="/fragments/footer :: footer"/>
+<div th:replace="fragments/footer :: footer"/>
 
 </body>
 </html>
